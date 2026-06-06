@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drisya R | Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style type="text/tailwindcss">
+   @theme {
+            --font-sans: 'Inter', sans-serif;
+            --font-display: 'Playfair Display', serif;
+            --color-primary: #0f172a;
+            --color-secondary: #1e293b;
+            --color-accent: #6366f1;
+            --color-accent-light: #818cf8;
+            --color-accent-dark: #4f46e5;
+            --color-surface: #f8fafc;
+            --color-muted: #64748b;
+        }
+    </style>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Playfair Display', serif; }
+        
+        /* Animated background gradient */
+        .hero-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.15);
+            animation: float 20s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+            25% { transform: translateY(-30px) translateX(20px); opacity: 0.6; }
+            50% { transform: translateY(-15px) translateX(-15px); opacity: 0.4; }
+            75% { transform: translateY(-40px) translateX(10px); opacity: 0.5; }
+        }
+        
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Skill bar animation */
+        .skill-bar {
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .skill-bar.animate {
+            width: var(--target-width);
+        }
+        
+        /* Card hover */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Nav blur */
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        /* Typing cursor */
+        .typing::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* Button shine */
+        .btn-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-shine::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .btn-shine:hover::before {
+            left: 100%;
+        }
+        
+        /* Timeline */
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #6366f1, #a855f7);
+        }
+        
+        /* Profile image ring */
+        .profile-ring {
+            position: relative;
+        }
+        .profile-ring::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+            z-index: -1;
+            animation: ringRotate 4s linear infinite;
+        }
+        @keyframes ringRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Counter animation */
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="#" class="text-2xl font-bold text-white font-display tracking-tight">
+                    Drisya<span class="text-accent-light">.</span>
+                </a>
+                
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#about" class="text-sm font-medium text-white/80 hover:text-white transition-colors">About</a>
+                    <a href="#skills" class="text-sm font-medium text-white/80 hover:text-white transition-colors">Skills</a>
+                    <a href="#courses" class="text-sm font-medium text-white/80 hover:text-white transition-colors">Courses</a>
+                    <a href="#experience" class="text-sm font-medium text-white/80 hover:text-white transition-colors">Experience</a>
+                    <a href="#contact" class="btn-shine px-5 py-2.5 bg-accent hover:bg-accent-dark text-white text-sm font-semibold rounded-full transition-colors">
+                        Contact Me
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="menuBtn" class="md:hidden text-white text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed inset-0 z-50 bg-primary">
+        <div class="flex flex-col h-full p-8">
+            <div class="flex justify-between items-center mb-12">
+                <span class="text-2xl font-bold text-white font-display">Drisya<span class="text-accent-light">.</span></span>
+                <button id="closeMenu" class="text-white text-2xl"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="flex flex-col gap-6">
+                <a href="#about" class="mobile-link text-2xl font-medium text-white/80 hover:text-white transition-colors">About</a>
+                <a href="#skills" class="mobile-link text-2xl font-medium text-white/80 hover:text-white transition-colors">Skills</a>
+                <a href="#courses" class="mobile-link text-2xl font-medium text-white/80 hover:text-white transition-colors">Courses</a>
+                <a href="#experience" class="mobile-link text-2xl font-medium 
+text-white/80 hover:text-white transition-colors">Experience</a>
+                <a href="#contact" class="mobile-link text-2xl font-medium text-white/80 hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </div>
+    <!-- Hero Section -->
+    <section class="hero-bg relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Particles -->
+        <div class="particle w-64 h-64 top-20 left-10" style="animation-delay: 0s;"></div>
+        <div class="particle w-48 h-48 top-40 right-20" style="animation-delay: 3s;"></div>
+        <div class="particle w-32 h-32 bottom-32 left-1/4" style="animation-delay: 6s;"></div>
+        <div class="particle w-56 h-56 bottom-20 right-1/3" style="animation-delay: 9s;"></div>
+        <div class="particle w-40 h-40 top-1/3 left-1/2" style="animation-delay: 12s;"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-32 text-center">
+            <div class="mb-8 reveal">
+                <span class="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-accent-light text-sm font-medium mb-6">
+                    <i class="fas fa-graduation-cap mr-2"></i>BCA 3rd Year Student
+                </span>
+            </div>
+            
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 reveal" style="transition-delay: 0.1s;">
+                Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-light to-purple-400">Drisya R</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-white/70 max-w-3xl mx-auto mb-4 reveal" style="transition-delay: 0.2s;">
+                <span id="typingText" class="typing"></span>
+            </p>
+            
+            <p class="text-lg text-white/50 max-w-2xl mx-auto mb-10 reveal" style="transition-delay: 0.3s;">
+                Passionate about transforming data into insights and building elegant solutions through code.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center reveal" style="transition-delay: 0.4s;">
+                <a href="#contact" class="btn-shine px-8 py-4 bg-accent hover:bg-accent-dark text-white font-semibold rounded-full transition-all inline-flex items-center justify-center gap-2">
+                    <i class="fas fa-paper-plane"></i> Get In Touch
+                </a>
+                <a href="#about" class="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white font-semibold rounded-full transition-all inline-flex items-center justify-center gap-2">
+                    <i class="fas fa-user"></i> About Me
+                </a>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 max-w-3xl mx-auto reveal" style="transition-delay: 0.5s;">
+                <div class="bg-white/5 
+backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+                    <div class="text-3xl font-bold text-white counter" data-target="5">0</div>
+                    <div class="text-sm text-white/50 mt-1">Core Skills</div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+                    <div class="text-3xl font-bold text-white counter" data-target="4">0</div>
+                    <div class="text-sm text-white/50 mt-1">Certifications</div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+                    <div class="text-3xl font-bold text-white counter" data-target="1">0</div>
+                    <div class="text-sm text-white/50 mt-1">Internships</div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+                    <div class="text-3xl font-bold text-white counter" data-target="3">0</div>
+                    <div class="text-sm text-white/50 mt-1">Years Study</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-white/40 hover:text-white/70 transition-colors">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+    <!-- About Section -->
+    <section id="about" class="py-24 lg:py-32 bg-surface">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <div class="relative">
+                        <div class="profile-ring w-72 h-72 md:w-96 md:h-96 mx-auto rounded-full overflow-hidden bg-gradient-to-br from-accent/20 to-purple-500/20 flex items-center justify-center">
+                            <div class="w-full h-full bg-gradient-to-br from-accent-light/30 to-purple-400/30 flex items-center justify-center">
+                                <i class="fas fa-user text-8xl text-accent/40"></i>
+                            </div>
+                        </div>
+                        <!-- Decorative elements -->
+                        <div class="absolute -top-4 -right-4 w-24 h-24 bg-accent/10 rounded-full blur-xl"></div>
+                        <div class="absolute -top-4 -right-4 w-24 h-24 bg-accent/10 rounded-full blur-xl"></div>
+                        <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-purple-500/10 rounded-full blur-xl"></div>
+                    </div>
+                </div>
+                
+                <div class="reveal" style="transition-delay: 0.2s;">
+                    <span class="text-accent font-semibold text-sm uppercase tracking-wider">About Me</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-primary mt-3 mb-6">
+                        Driven by Data,<br>Powered by Code
+                    </h2>
+                    <p class="text-muted text-lg leading-relaxed mb-6">
+                        I am <strong class="text-primary">Drisya R</strong>, a dedicated and ambitious student currently pursuing my 
+                        <strong class="text-primary">Bachelor of Computer Applications (BCA) in the 3rd year</strong>. 
+                        With a strong foundation in programming and a growing expertise in data analytics, 
+                        I am passionate about leveraging technology to solve real-world problems.
+                    </p>
+                    <p class="text-muted text-lg leading-relaxed mb-8">
+                        My journey includes hands-on experience through internships, specialized certifications from 
+                        prestigious institutions like <strong class="text-primary">IIT Bombay</strong> and <strong class="text-primary">IIT Palakkad</strong>, 
+                        and a continuous drive to expand my knowledge in data analytics and software development.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-medium">
+                            <i class="fas fa-chart-line mr-2"></i>Data Analytics
+                        </span>
+                        <span class="px-4 py-2 bg-purple-500/10 text-purple-600 rounded-full text-sm font-medium">
+                            <i class="fas fa-code mr-2"></i>Programming
+                        </span>
+                        <span class="px-4 py-2 bg-emerald-500/10 text-emerald-600 rounded-full text-sm font-medium">
+                            <i class="fas fa-laptop-code mr-2"></i>Web Design
+                        </span>
+                        <span class="px-4 py-2 bg-amber-500/10 text-amber-600 rounded-full text-sm font -medium">
+                            <i class="fas fa-code mr-2"></i>Programming
+                        </span>
+                        <span class="px-4 py-2 bg-emerald-500/10 text-emerald-600 rounded-full text-sm font-medium">
+                            <i class="fas fa-laptop-code mr-2"></i>Web Design
+                        </span>
+                        <span class="px-4 py-2 bg-amber-500/10 text-amber-600 rounded-full text-sm font-medium">
+                            <i class="fas fa-database mr-2"></i>Database
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 lg:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent font-semibold text-sm uppercase tracking-wider">My Expertise</span>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-primary mt-3">Technical Skills</h2>
+                <p class="text-muted text-lg mt-4 max-w-2xl mx-auto">
+                    A diverse skill set honed through academic learning, online certifications, and hands-on project experience.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Python -->
+                <div class="card-hover bg-surface rounded-3xl p-8 border border-slate-100 reveal">
+                    <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fab fa-python text-2xl text-blue-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-2">Python</h3>
+                    <p class="text-muted text-sm mb-4">Data manipulation, scripting, and automation with Python libraries.</p>
+                    <div class="w-full bg-slate-200 rounded-full h-2.5">
+                        <div class="skill-bar bg-blue-500 h-2.5 rounded-full" style="--target-width: 85%"></div>
+                    </div>
+                    <span class="text-sm text-muted mt-2 inline-block">85%</span>
+                </div>
+                
+                <!-- C Programming -->
+                <div class="card-hover bg-surface rounded-3xl p-8 border border-slate-100 reveal" style="transition-delay: 0.1s;">
+                    <div class="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-c text-2xl text-indigo-500 font-bold"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-2">C Programming</h3>
+                    <p class="text-muted text-sm mb-4">Strong foundation in procedural programming and system-level concepts.</p>
+                    <div class="w-full bg-slate-200 rounded-full h-2.5">
+                        <div class="skill-bar bg-indigo-500 h-2.5 rounded-full" style="--target-width: 80%"></div>
+                    </div>
+                    <span class="text-sm text-muted mt-2 inline-block">80%</span>
+                </div>
+                
+                <!-- SQL -->
+                <div class="card-hover bg-surface rounded-3xl p-8 border border-slate-100 reveal" style="transition-delay: 0.2s;">
+                    <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-database text-2xl text-emerald-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-2">SQL</h3>
+                    <p class="text-muted text-sm mb-4">Database design, querying, and management with relational databases.</p>
+                    <div class="w-full bg-slate-200 rounded-full h-2.5">
+                        <div class="skill-bar bg-emerald-500 h-2.5 rounded-full" style="--target-width: 82%"></div>
+                    </div>
+                    <span class="text-sm text-muted mt-2 inline-block">82%</span>
+                </div>
+                
+                <!-- Excel -->
+                    <div class="bg-white rounded-xl p-6 border border-slate-100">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-file-excel text-green-600 text-xl"></i>
+                                <span class="font-semibold text-primary">Microsoft Excel</span>
+                            </div>
+                            <span class="text-sm text-slate-400">88%</span>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-2.5">
+                            <div class="skill-bar-fill bg-green-600 h-2.5 rounded-full" data-width="88%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Web Design -->
+                    <div class="bg-white rounded-xl p-6 border border-slate-100">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-paint-brush text-orange-500 text-xl"></i>
+                                <span class="font-semibold text-primary">Web Designing</span>
+                            </div>
+                            <span class="text-sm text-slate-400">78%</span>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-2.5">
+                            <div class="skill-bar-fill bg-orange-500 h-2.5 rounded-full" data-width="78%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Data Analytics -->
+                    <div class="bg-white rounded-xl p-6 border border-slate-100">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-chart-pie text-purple-500 text-xl"></i>
+                                <span class="font-semibold text-primary">Data Analytics</span>
+                            </div>
+                            <span class="text-sm text-slate-400">75%</span>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-2.5">
+                            <div class="skill-bar-fill bg-purple-500 h-2.5 rounded-full" data-width="75%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Courses Section -->
+    <section id="courses" class="py-16 bg-slate-50">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="fade-in">
+                <h2 class="text-2xl font-bold text-primary mb-6 flex items-center gap-3">
+                    <span class="w-8 h-8 bg-accent text-white rounded-lg flex items-center justify-center text-sm"><i class="fas fa-certificate"></i></span>
+                    Courses & Certifications
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- IIT Bombay -->
+                    <div class="bg-white rounded-xl p-6 border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-university text-red-500 text-lg"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-semibold text-red-500 uppercase">IIT Bombay</span>
+                                <h3 class="font-semibold text-primary mt-0.5">GIMP & Graphic Design</h3>
+                                <p class="text-sm text-slate-500 mt-1">Add-on course on image editing and graphic design tools.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ruby -->
+                    <div class="bg-white rounded-xl p-6 border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-pink-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-gem text-pink-500 text-lg"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-semibold text-pink-500 uppercase">Add-on Course</span>
+                                <h3 class="font-semibold text-primary mt-0.5">Ruby Programming</h3>
+                                <p class="text-sm text-slate-500 mt-1">Object-oriented programming and dynamic scripting.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Srishti -->
+                    <div class="bg-white rounded-xl p-6 border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-cyan-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-bar text-cyan-500 text-lg"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-semibold text-cyan-500 uppercase">Srishti Innovative</span>
+                                <h3 class="font-semibold text-primary mt-0.5">Data Analytics</h3>
+                                <p class="text-sm text-slate-500 mt-1">Data processing, visualization, and analytical methods.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- IIT Palakkad -->
+                    <div class="bg-white rounded-xl p-6 border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-briefcase text-purple-500 text-lg"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-semibold text-purple-500 uppercase">IIT Palakkad</span>
+                                <h3 class="font-semibold text-primary mt-0.5">Research Internship</h3>
+                                <p class="text-sm text-slate-500 mt-1">Currently pursuing hands-on research experience.</p>
+                                <span class="inline-block mt-2 px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded">Ongoing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Experience Timeline -->
+    <section id="experience" class="py-16 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="fade-in">
+                <h2 class="text-2xl font-bold text-primary mb-6 flex items-center gap-3">
+                    <span class="w-8 h-8 bg-accent text-white rounded-lg flex items-center justify-center text-sm"><i class="fas fa-road"></i></span>
+                    Experience & Education
+                </h2>
+                <div class="relative pl-8">
+                    <div class="absolute left-3 top-2 bottom-2 w-0.5 bg-slate-200"></div>
+                    
+                    <div class="relative mb-8">
+                        <div class="absolute -left-5 top-1 w-4 h-4 bg-accent rounded-full border-2 border-white shadow"></div>
+                        <div class="bg-white rounded-xl p-5 border border-slate-100">
+                            <span class="text-xs font-semibold text-accent">2022 - Present</span>
+                            <h3 class="font-semibold text-primary mt-1">Bachelor of Computer Applications (BCA)</h3>
+                            <p class="text-sm text-slate-500 mt-1">Currently in 3rd Year. Building strong foundations in CS, programming, and software development.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative mb-8">
+                        <div class="absolute -left-5 top-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white shadow"></div>
+                        <div class="bg-white rounded-xl p-5 border border-slate-100">
+                            <span class="text-xs font-semibold text-red-500">Certification</span>
+                            <h3 class="font-semibold text-primary mt-1">GIMP & Design Tools — IIT Bombay</h3>
+                            <p class="text-sm text-slate-500 mt-1">Add-on course on image editing and graphic design using GIMP.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative mb-8">
+                        <div class="absolute -left-5 top-1 w-4 h-4 bg-pink-500 rounded-full border-2 border-white shadow"></div>
+                        <div class="bg-white rounded-xl p-5 border border-slate-100">
+                            <span class="text-xs font-semibold text-pink-500">Certification</span>
+                            <h3 class="font-semibold text-primary mt-1">Ruby Programming</h3>
+                            <p class="text-sm text-slate-500 mt-1">Add-on course covering Ruby fundamentals and OOP concepts.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative mb-8">
+                        <div class="absolute -left-5 top-1 w-4 h-4 bg-cyan-500 rounded-full border-2 border-white shadow"></div>
+                        <div class="bg-white rounded-xl p-5 border border-slate-100">
+                            <span class="text-xs font-semibold text-cyan-500">Certification</span>
+                            <h3 class="font-semibold text-primary mt-1">Data Analytics — Srishti Innovative</h3>
+                            <p class="text-sm text-slate-500 mt-1">Training in data analysis, visualization, and reporting.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="absolute -left-5 top-1 w-4 h-4 bg-purple-500 rounded-full border-2 border-white shadow animate-pulse"></div>
+                        <div class="bg-white rounded-xl p-5 border border-slate-100">
+                            <span class="text-xs font-semibold text-purple-500">Current Internship</span>
+                            <h3 class="font-semibold text-primary mt-1">Research Intern — IIT Palakkad</h3>
+                            <p class="text-sm text-slate-500 mt-1">Contributing to research projects in an academic environment.</p>
+                            <span class="inline-block mt-2 px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded">In Progress</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Career Goals -->
+    <section class="py-16 bg-primary">
+        <div class="max-w-5xl mx-auto px-6 text-center fade-in">
+            <h2 class="text-2xl font-bold text-white mb-4">Looking Ahead</h2>
+            <p class="text-slate-300 max-w-2xl mx-auto mb-8">
+                I am actively seeking opportunities in <strong class="text-white">Data Analytics</strong>, 
+                <strong class="text-white">Software Programming</strong>, and related technology domains. 
+                Eager to contribute, learn, and grow in a dynamic work environment.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="px-4 py-2 bg-white/10 text-white text-sm rounded-full border border-white/10">Data Analytics</span>
+                <span class="px-4 py-2 bg-white/10 text-white text-sm rounded-full border border-white/10">Software Development</span>
+                <span class="px-4 py-2 bg-white/10 text-white text-sm rounded-full border border-white/10">Web Development</span>
+                <span class="px-4 py-2 bg-white/10 text-white text-sm rounded-full border border-white/10">Database Management</span>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="fade-in">
+                <h2 class="text-2xl font-bold text-primary mb-6 flex items-center gap-3">
+                    <span class="w-8 h-8 bg-accent text-white rounded-lg flex items-center justify-center text-sm"><i class="fas fa-envelope"></i></span>
+                    Let's Connect
+                </h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <a href="tel:+919074780578" class="bg-white rounded-xl p-6 border border-slate-100 text-center hover:border-accenttransition-colors group">
+                        <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-accent transition-colors">
+                            <i class="fas fa-phone text-accent group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="font-semibold text-primary text-sm">Phone</h3>
+                        <p class="text-slate-500 text-sm mt-1">+91 90747 80578</p>
+                    </a>
+                    
+                    <a href="https://www.linkedin.com/in/drisya-r-bca" target="_blank" class="bg-white rounded-xl p-6 border border-slate-100 text-center hover:border-blue-500 transition-colors group">
+                        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-linkedin-in text-blue-600 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="font-semibold text-primary text-sm">LinkedIn</h3>
+                        <p class="text-slate-500 text-sm mt-1">linkedin.com/in/drisya-r-bca</p>
+                    </a>
+                    
+                    <a href="mailto:drisya.r@email.com" class="bg-white rounded-xl p-6 border border-slate-100 text-center hover:border-emerald-500 transition-colors group">
+                        <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-emerald-500 transition-colors">
+                            <i class="fas fa-envelope text-emerald-500 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="font-semibold text-primary text-sm">Email</h3>
+                        <p class="text-slate-500 text-sm mt-1">drisya.r@email.com</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-100 py-8 px-6">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="text-center md:text-left">
+                <span class="text-lg font-bold text-primary">Drisya<span class="text-accent">.</span></span>
+                <p class="text-xs text-slate-400 mt-1">BCA Student | Data Analytics | Programming</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://www.linkedin.com/in/drisya-r-bca" target="_blank" class="w-9 h-9 bg-slate-200 rounded-full flex items-center justify-center text-slate-600 hover:bg-accent hover:text-white transition-colors">
+                    <i class="fab fa-linkedin-in text-sm"></i>
+                </a>
+                <a href="#" class="w-9 h-9 bg-slate-200 rounded-full flex items-center justify-center text-slate-600 hover:bg-accent hover:text-white transition-colors">
+                    <i class="fab fa-github text-sm"></i>
+                </a>
+                <a href="#" class="w-9 h-9 bg-slate-200 rounded-full flex items-center justify-center text-slate-600 hover:bg-accent hover:text-white transition-colors">
+                    <i class="fab fa-twitter text-sm"></i>
+                </a>
+            </div>
+        </div>
+        <div class="max-w-5xl mx-auto mt-6 text-center">
+            <p class="text-xs text-slate-400">&copy; <span id="year"></span> Drisya R. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+        
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+        });
+        
+        // Fade in on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animate skill bars
+                    const bars = entry.target.querySelectorAll('.skill-bar-fill');
+                    bars.forEach(bar => {
+                        bar.style.width = bar.dataset.width;
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        
+        // Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
